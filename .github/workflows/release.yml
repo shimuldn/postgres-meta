@@ -9,7 +9,8 @@ on:
 jobs:
   semantic-release:
     name: Release
-    runs-on: ubuntu-20.04
+#     runs-on: ubuntu-20.04
+    runs-on: self-hosted
     outputs:
       new-release-published: ${{ steps.semantic-release.outputs.new_release_published }}
       new-release-version: ${{ steps.semantic-release.outputs.new_release_version }}
@@ -29,15 +30,16 @@ jobs:
         with:
           semantic_version: 18
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+#           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   upload:
     name: Upload assets to GitHub Releases
     needs:
       - semantic-release
     if: needs.semantic-release.outputs.new-release-published == 'true'
-    runs-on: ubuntu-20.04
+#     runs-on: ubuntu-20.04
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
 
@@ -66,13 +68,14 @@ jobs:
     needs:
       - semantic-release
     if: needs.semantic-release.outputs.new-release-published == 'true'
-    runs-on: ubuntu-20.04
+#     runs-on: ubuntu-20.04
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
 
       - uses: docker/setup-qemu-action@v2
         with:
-          platforms: amd64,arm64
+          platforms: arm64
 
       - uses: docker/setup-buildx-action@v2
 
@@ -84,6 +87,6 @@ jobs:
       - uses: docker/build-push-action@v3
         with:
           context: .
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/arm64
           push: true
-          tags: supabase/postgres-meta:latest,supabase/postgres-meta:v${{ needs.semantic-release.outputs.new-release-version }}
+          tags: supabase-arm/postgres-meta:latest,supabase/postgres-meta:v${{ needs.semantic-release.outputs.new-release-version }}
