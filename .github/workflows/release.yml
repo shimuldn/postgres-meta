@@ -7,61 +7,61 @@ on:
   workflow_dispatch:
 
 jobs:
-  semantic-release:
-    name: Release
-#     runs-on: ubuntu-20.04
-    runs-on: self-hosted
-    outputs:
-      new-release-published: ${{ steps.semantic-release.outputs.new_release_published }}
-      new-release-version: ${{ steps.semantic-release.outputs.new_release_version }}
-    steps:
-      - uses: actions/checkout@v3
+#   semantic-release:
+#     name: Release
+# #     runs-on: ubuntu-20.04
+#     runs-on: self-hosted
+#     outputs:
+#       new-release-published: ${{ steps.semantic-release.outputs.new_release_published }}
+#       new-release-version: ${{ steps.semantic-release.outputs.new_release_version }}
+#     steps:
+#       - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: "16"
+#       - uses: actions/setup-node@v3
+#         with:
+#           node-version: "16"
 
-      - run: |
-          npm clean-install
-          npm run build
+#       - run: |
+#           npm clean-install
+#           npm run build
 
-      - id: semantic-release
-        uses: cycjimmy/semantic-release-action@v2
-        with:
-          semantic_version: 18
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+#       - id: semantic-release
+#         uses: cycjimmy/semantic-release-action@v2
+#         with:
+#           semantic_version: 18
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+#           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-  upload:
-    name: Upload assets to GitHub Releases
-    needs:
-      - semantic-release
-    if: needs.semantic-release.outputs.new-release-published == 'true'
-#     runs-on: ubuntu-20.04
-    runs-on: self-hosted
-    steps:
-      - uses: actions/checkout@v3
+#   upload:
+#     name: Upload assets to GitHub Releases
+#     needs:
+#       - semantic-release
+#     if: needs.semantic-release.outputs.new-release-published == 'true'
+# #     runs-on: ubuntu-20.04
+#     runs-on: self-hosted
+#     steps:
+#       - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: "16"
+#       - uses: actions/setup-node@v3
+#         with:
+#           node-version: "16"
 
-      - name: Prepare release
-        run: |
-          npm clean-install
-          npm run pkg
-          mv bin/postgres-meta-linux postgres-meta
-          tar -czvf postgres-meta-${{ needs.semantic-release.outputs.new-release-version }}-x86_64-linux-gnu.tar.gz postgres-meta
-          mv bin/postgres-meta-macos postgres-meta
-          tar -czvf postgres-meta-${{ needs.semantic-release.outputs.new-release-version }}-x86_64-apple-darwin.tar.gz postgres-meta
-          mv bin/postgres-meta-win.exe postgres-meta.exe
-          tar -czvf postgres-meta-${{ needs.semantic-release.outputs.new-release-version }}-x86_64-pc-windows.tar.gz postgres-meta.exe
+#       - name: Prepare release
+#         run: |
+#           npm clean-install
+#           npm run pkg
+#           mv bin/postgres-meta-linux postgres-meta
+#           tar -czvf postgres-meta-${{ needs.semantic-release.outputs.new-release-version }}-x86_64-linux-gnu.tar.gz postgres-meta
+#           mv bin/postgres-meta-macos postgres-meta
+#           tar -czvf postgres-meta-${{ needs.semantic-release.outputs.new-release-version }}-x86_64-apple-darwin.tar.gz postgres-meta
+#           mv bin/postgres-meta-win.exe postgres-meta.exe
+#           tar -czvf postgres-meta-${{ needs.semantic-release.outputs.new-release-version }}-x86_64-pc-windows.tar.gz postgres-meta.exe
 
-      - uses: softprops/action-gh-release@v1
-        with:
-          tag_name: v${{ needs.semantic-release.outputs.new-release-version }}
-          files: postgres-meta-*.tar.gz
+#       - uses: softprops/action-gh-release@v1
+#         with:
+#           tag_name: v${{ needs.semantic-release.outputs.new-release-version }}
+#           files: postgres-meta-*.tar.gz
 
   docker-hub:
     name: Release on Docker Hub
