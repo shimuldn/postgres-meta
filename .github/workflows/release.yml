@@ -25,12 +25,12 @@ jobs:
           npm clean-install
           npm run build
 
-#       - id: semantic-release
-#         uses: cycjimmy/semantic-release-action@v2
-#         with:
-#           semantic_version: 18
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+      - id: semantic-release
+        uses: cycjimmy/semantic-release-action@v2
+        with:
+          semantic_version: 18
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 #           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   upload:
@@ -89,4 +89,4 @@ jobs:
           context: .
           platforms: linux/arm64
           push: true
-          tags: supabase-arm/postgres-meta:latest,supabase/postgres-meta:v${{ needs.semantic-release.outputs.new-release-version }}
+          tags: shimuldn/postgres-meta:latest,shimuldn/postgres-meta:v${{ needs.semantic-release.outputs.new-release-version }}
