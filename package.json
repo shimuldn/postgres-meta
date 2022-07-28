@@ -2,8 +2,8 @@
   "name": "@supabase/postgres-meta",
   "version": "0.0.0-automated",
   "description": "A RESTful API for managing your Postgres.",
-  "homepage": "https://github.com/supabase/postgres-meta",
-  "bugs": "https://github.com/supabase/postgres-meta/issues",
+  "homepage": "https://github.com/shimuldn/postgres-meta",
+  "bugs": "https://github.com/shimuldn/postgres-meta/issues",
   "license": "MIT",
   "author": "Supabase",
   "files": [
@@ -11,7 +11,7 @@
   ],
   "main": "dist/main/index.js",
   "module": "dist/module/index.js",
-  "repository": "supabase/postgres-meta",
+  "repository": "shimuldn/postgres-meta",
   "scripts": {
     "clean": "rimraf bin dist",
     "format": "prettier --write \"{src,test}/**/*.ts\"",
