@@ -65,9 +65,9 @@ jobs:
 
   docker-hub:
     name: Release on Docker Hub
-    needs:
-      - semantic-release
-    if: needs.semantic-release.outputs.new-release-published == 'true'
+#     needs:
+#       - semantic-release
+#     if: needs.semantic-release.outputs.new-release-published == 'true'
 #     runs-on: ubuntu-20.04
     runs-on: self-hosted
     steps:
@@ -89,4 +89,4 @@ jobs:
           context: .
           platforms: linux/arm64
           push: true
-          tags: shimuldn/postgres-meta:latest,shimuldn/postgres-meta:v${{ needs.semantic-release.outputs.new-release-version }}
+          tags: shimuldn/postgres-meta:latest,shimuldn/postgres-meta:0.41.1
