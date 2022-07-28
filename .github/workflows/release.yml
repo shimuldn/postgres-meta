@@ -25,12 +25,12 @@ jobs:
           npm clean-install
           npm run build
 
-      - id: semantic-release
-        uses: cycjimmy/semantic-release-action@v2
-        with:
-          semantic_version: 18
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+#       - id: semantic-release
+#         uses: cycjimmy/semantic-release-action@v2
+#         with:
+#           semantic_version: 18
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 #           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   upload:
