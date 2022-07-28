@@ -1,11 +1,11 @@
 {
-  "name": "@supabase/postgres-meta",
-  "version": "0.0.0-automated",
+  "name": "@shimuldn/postgres-meta",
+  "version": "0.42.0",
   "description": "A RESTful API for managing your Postgres.",
   "homepage": "https://github.com/shimuldn/postgres-meta",
   "bugs": "https://github.com/shimuldn/postgres-meta/issues",
   "license": "MIT",
-  "author": "Supabase",
+  "author": "shimuldn",
   "files": [
     "dist"
   ],

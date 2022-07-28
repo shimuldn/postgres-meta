@@ -1,6 +1,6 @@
 services:
   db:
-    image: supabase/postgres:14.1.0
+    image: shimuldn/postgres:14.1.0
     ports:
       - 5432:5432
     volumes:
