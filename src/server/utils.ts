@@ -9,6 +9,7 @@ export const extractRequestForLogging = (request: FastifyRequest) => {
     }
   } catch (e: any) {
     console.warn('failed to parse PG connstring for ' + request.url)
+    console.warn('just to test')
   }
 
   const additional = request.headers['x-supabase-info']?.toString() || ''
@@ -20,6 +21,8 @@ export const extractRequestForLogging = (request: FastifyRequest) => {
     opt: additional,
   }
 }
+
+
 
 export function translateErrorToResponseCode(
   error: { message: string },
